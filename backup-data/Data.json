@@ -1,0 +1,162 @@
+[
+    {
+        "id": 1,
+        "name": "Pollo a la parrilla",
+        "post_by": "Chef Juan",
+        "valoration": 4.5,
+        "image": "imagen_url_1",
+        "ingredients": [
+            "pollo",
+            "sal"
+        ],
+        "comments": [
+            {
+                "comment_text": "¡Deliciosa receta!",
+                "posted_by": "Usuario1"
+            },
+            {
+                "comment_text": "Facil de hacer",
+                "posted_by": "Usuario2"
+            }
+        ],
+        "steps": [
+            "Marinar el pollo en sal y pimienta",
+            "Asar el pollo a la parrilla"
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Ensalada Cesar",
+        "post_by": "Chef Ana",
+        "valoration": 4.2,
+        "image": "imagen_url_2",
+        "ingredients": [
+            "lechuga",
+            "pan tostado"
+        ],
+        "comments": [
+            {
+                "comment_text": "Me encanta esta ensalada",
+                "posted_by": "Usuario3"
+            },
+            {
+                "comment_text": "Muy refrescante",
+                "posted_by": "Usuario4"
+            }
+        ],
+        "steps": [
+            "Lavar y cortar la lechuga",
+            "Agregar crutones al gusto"
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Pasta Alfredo",
+        "post_by": "Chef Maria",
+        "valoration": 4.7,
+        "image": "imagen_url_3",
+        "ingredients": [
+            "pasta",
+            "crema",
+            "queso parmesano"
+        ],
+        "comments": [
+            {
+                "comment_text": "Esta pasta es increíble",
+                "posted_by": "Usuario5"
+            },
+            {
+                "comment_text": "¡La mejor receta de pasta!",
+                "posted_by": "Usuario6"
+            }
+        ],
+        "steps": [
+            "Cocinar la pasta al dente",
+            "Preparar la salsa con crema y queso parmesano",
+            "Mezclar la pasta con la salsa"
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Tacos de Carnitas",
+        "post_by": "Chef Miguel",
+        "valoration": 4.8,
+        "image": "imagen_url_4",
+        "ingredients": [
+            "carne de cerdo",
+            "cebolla",
+            "cilantro",
+            "tortillas"
+        ],
+        "comments": [
+            {
+                "comment_text": "Estos tacos son auténticos",
+                "posted_by": "Usuario7"
+            },
+            {
+                "comment_text": "¡Me encantan los tacos de carnitas!",
+                "posted_by": "Usuario8"
+            }
+        ],
+        "steps": [
+            "Cocinar la carne de cerdo hasta que esté dorada",
+            "Picar cebolla y cilantro",
+            "Servir la carne en tortillas con cebolla y cilantro"
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Sushi de Salmon",
+        "post_by": "Chef Yuki",
+        "valoration": 4.9,
+        "image": "imagen_url_5",
+        "ingredients": [
+            "arroz",
+            "salmón fresco",
+            "alga nori"
+        ],
+        "comments": [
+            {
+                "comment_text": "El mejor sushi que he probado",
+                "posted_by": "Usuario9"
+            },
+            {
+                "comment_text": "Muy fresco y delicioso",
+                "posted_by": "Usuario10"
+            }
+        ],
+        "steps": [
+            "Preparar el arroz y cortar el salmón en tiras",
+            "Colocar el arroz y el salmón sobre el alga nori",
+            "Enrollar y cortar en porciones"
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Tarta de Manzana",
+        "post_by": "Chef Elena",
+        "valoration": 4.6,
+        "image": "imagen_url_6",
+        "ingredients": [
+            "manzanas",
+            "azúcar",
+            "canela",
+            "masa para tarta"
+        ],
+        "comments": [
+            {
+                "comment_text": "Esta tarta es un postre perfecto",
+                "posted_by": "Usuario11"
+            },
+            {
+                "comment_text": "Me recordó a la tarta de mi abuela",
+                "posted_by": "Usuario12"
+            }
+        ],
+        "steps": [
+            "Pelar y cortar las manzanas en rodajas",
+            "Mezclar con azúcar y canela",
+            "Colocar en la masa para tarta y hornear"
+        ]
+    }
+]
