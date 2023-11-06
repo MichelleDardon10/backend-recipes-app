@@ -30,7 +30,8 @@ def create_tables(connection):
             name VARCHAR(150) NOT NULL,
             post_by VARCHAR(150),
             valoration FLOAT,
-            image VARCHAR(255)
+            image VARCHAR(255),
+            category VARCHAR(150)
         )
         ''',
         '''
@@ -88,13 +89,14 @@ def insert_recipe(recipe_data):
             return False
         else:
             # Insert the recipe into the database
-            query = "INSERT INTO tblrecipes (id, name, post_by, valoration, image) VALUES (%s, %s, %s, %s, %s)"
+            query = "INSERT INTO tblrecipes (id, name, post_by, valoration, image, category) VALUES (%s, %s, %s, %s, %s, %s)"
             cursor.execute(query, (
                 recipe_data["id"],
                 recipe_data["name"],
                 recipe_data["post_by"],
                 recipe_data["valoration"],
-                recipe_data["image"]
+                recipe_data["image"],
+                recipe_data["category"]
             ))
 
             # Insert ingredients
