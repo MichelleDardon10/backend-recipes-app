@@ -70,6 +70,40 @@ def search_recipes():
     # Return the list of recipes in JSON format
     return jsonify({"recipes": matching_recipes})
 
+#Function to find recipes by category
+@app.route('/categories', methods=['GET'])
+def search_recipes_by_category():
+    category_query = request.args.get('category', '').lower()
+    print("Category query: " + category_query)
+    
+    if not category_query:
+        return jsonify({'error': 'Category parameter is missing'})
+
+    connection = create_mysql_connection()
+    if not connection:
+        return jsonify({'error': 'Unable to connect to the database'})
+
+    cursor = connection.cursor(dictionary=True)
+
+    query = f"SELECT * FROM tblrecipes WHERE category = '{category_query}'"
+
+    print(query)
+
+    cursor.execute(query)
+
+    matching_recipes = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
+    for recipe in matching_recipes:
+        # Add ingredients, comments, and steps to each recipe entry
+        recipe["ingredients"] = get_recipe_ingredients(recipe["id"])
+        recipe["comments"] = get_recipe_comments(recipe["id"])
+        recipe["steps"] = get_recipe_steps(recipe["id"])
+
+    # Return the list of recipes in JSON format
+    return jsonify({"recipes": matching_recipes})
+
 # Function to get ingredients for a recipe
 def get_recipe_ingredients(recipe_id):
     connection = create_mysql_connection()

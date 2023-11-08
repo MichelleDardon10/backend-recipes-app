@@ -5,6 +5,7 @@
         "post_by": "Chef Juan",
         "valoration": 4.5,
         "image": "imagen_url_1",
+        "category": "Pollos",
         "ingredients": [
             "pollo",
             "sal"
@@ -30,6 +31,7 @@
         "post_by": "Chef Ana",
         "valoration": 4.2,
         "image": "imagen_url_2",
+        "category": "Ensaladas",
         "ingredients": [
             "lechuga",
             "pan tostado"
@@ -55,6 +57,7 @@
         "post_by": "Chef Maria",
         "valoration": 4.7,
         "image": "imagen_url_3",
+        "category": "Popular",
         "ingredients": [
             "pasta",
             "crema",
@@ -82,6 +85,7 @@
         "post_by": "Chef Miguel",
         "valoration": 4.8,
         "image": "imagen_url_4",
+        "category": "Popular",
         "ingredients": [
             "carne de cerdo",
             "cebolla",
@@ -110,6 +114,7 @@
         "post_by": "Chef Yuki",
         "valoration": 4.9,
         "image": "imagen_url_5",
+        "category": "Popular",
         "ingredients": [
             "arroz",
             "salmón fresco",
@@ -137,6 +142,7 @@
         "post_by": "Chef Elena",
         "valoration": 4.6,
         "image": "imagen_url_6",
+        "category": "Postres",
         "ingredients": [
             "manzanas",
             "azúcar",
