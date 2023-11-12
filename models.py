@@ -20,6 +20,7 @@ def create_mysql_connection():
         return None
 
 
+# crea las tablas
 def create_tables(connection):
     cursor = connection.cursor()
 
@@ -32,7 +33,8 @@ def create_tables(connection):
             post_by VARCHAR(150),
             valoration FLOAT,
             image VARCHAR(255),
-            category VARCHAR(150)
+            category VARCHAR(150),
+            destacado INT
         )
         """,
         """
@@ -91,7 +93,7 @@ def insert_recipe(recipe_data):
             return False
         else:
             # Insert the recipe into the database
-            query = "INSERT INTO tblrecipes (id, name, post_by, valoration, image, category) VALUES (%s, %s, %s, %s, %s, %s)"
+            query = "INSERT INTO tblrecipes (id, name, post_by, valoration, image, category, destacado) VALUES (%s, %s, %s, %s, %s, %s, %s)"
             cursor.execute(
                 query,
                 (
@@ -101,6 +103,7 @@ def insert_recipe(recipe_data):
                     recipe_data["valoration"],
                     recipe_data["image"],
                     recipe_data["category"],
+                    recipe_data["destacado"],
                 ),
             )
 
@@ -137,3 +140,4 @@ def insert_recipe(recipe_data):
 
 
 # prueba webhook2
+# por favor coca
