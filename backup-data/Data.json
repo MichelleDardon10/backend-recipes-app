@@ -23,7 +23,8 @@
         "steps": [
             "Marinar el pollo en sal y pimienta",
             "Asar el pollo a la parrilla"
-        ]
+        ],
+        "destacado": 4
     },
     {
         "id": 2,
@@ -49,7 +50,8 @@
         "steps": [
             "Lavar y cortar la lechuga",
             "Agregar crutones al gusto"
-        ]
+        ],
+        "destacado": 3
     },
     {
         "id": 3,
@@ -77,7 +79,8 @@
             "Cocinar la pasta al dente",
             "Preparar la salsa con crema y queso parmesano",
             "Mezclar la pasta con la salsa"
-        ]
+        ],
+        "destacado": 5
     },
     {
         "id": 4,
@@ -106,7 +109,8 @@
             "Cocinar la carne de cerdo hasta que esté dorada",
             "Picar cebolla y cilantro",
             "Servir la carne en tortillas con cebolla y cilantro"
-        ]
+        ],
+        "destacado": 4
     },
     {
         "id": 5,
@@ -134,7 +138,8 @@
             "Preparar el arroz y cortar el salmón en tiras",
             "Colocar el arroz y el salmón sobre el alga nori",
             "Enrollar y cortar en porciones"
-        ]
+        ],
+        "destacado": 5
     },
     {
         "id": 6,
@@ -163,6 +168,12 @@
             "Pelar y cortar las manzanas en rodajas",
             "Mezclar con azúcar y canela",
             "Colocar en la masa para tarta y hornear"
-        ]
+        ],
+        "destacado": 4
     }
 ]
+
+
+
+
+

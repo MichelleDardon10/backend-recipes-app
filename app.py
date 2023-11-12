@@ -3,8 +3,10 @@ import sys
 
 from flask import Flask, jsonify, request
 import mysql.connector
+
 # Import the create_tables function from the models module
 from models import create_tables, create_mysql_connection
+
 # Import the insert_recipe function from the models module
 from models import insert_recipe
 from mysql.connector import Error
@@ -15,6 +17,7 @@ from flask_cors import CORS
 # Create a Flask application
 app = Flask(__name__)
 CORS(app)
+
 
 # Define a route for retrieving all recipes
 @app.route("/recipes", methods=["GET"])
@@ -41,13 +44,13 @@ def get_recipes():
     return jsonify({"recipes": recipes})
 
 
-@app.route('/search', methods=['GET'])
+@app.route("/search", methods=["GET"])
 def search_recipes():
-    search_query = request.args.get('term', '').lower()
+    search_query = request.args.get("term", "").lower()
     print("query: " + search_query)
     connection = create_mysql_connection()
     if not connection:
-        return jsonify({'error': 'Unable to connect to the database'})
+        return jsonify({"error": "Unable to connect to the database"})
 
     cursor = connection.cursor(dictionary=True)
 
@@ -70,18 +73,19 @@ def search_recipes():
     # Return the list of recipes in JSON format
     return jsonify({"recipes": matching_recipes})
 
-#Function to find recipes by category
-@app.route('/categories', methods=['GET'])
+
+# Function to find recipes by category
+@app.route("/categories", methods=["GET"])
 def search_recipes_by_category():
-    category_query = request.args.get('category', '').lower()
+    category_query = request.args.get("category", "").lower()
     print("Category query: " + category_query)
-    
+
     if not category_query:
-        return jsonify({'error': 'Category parameter is missing'})
+        return jsonify({"error": "Category parameter is missing"})
 
     connection = create_mysql_connection()
     if not connection:
-        return jsonify({'error': 'Unable to connect to the database'})
+        return jsonify({"error": "Unable to connect to the database"})
 
     cursor = connection.cursor(dictionary=True)
 
@@ -103,6 +107,7 @@ def search_recipes_by_category():
 
     # Return the list of recipes in JSON format
     return jsonify({"recipes": matching_recipes})
+
 
 # Function to get ingredients for a recipe
 def get_recipe_ingredients(recipe_id):
@@ -173,11 +178,51 @@ if connection:
     # Loop through the recipe data and insert each recipe into the database
     for recipe_data in recipes_data:
         if insert_recipe(recipe_data):
-            print(f"Recipe with ID {recipe_data['id']} has been inserted into the database.")
+            print(
+                f"Recipe with ID {recipe_data['id']} has been inserted into the database."
+            )
         else:
-            print(f"Recipe with ID {recipe_data['id']} already exists in the database or an error occurred.")
+            print(
+                f"Recipe with ID {recipe_data['id']} already exists in the database or an error occurred."
+            )
     connection.close()
 
+
+# RUTA DESTACADO
+@app.route("/destacado", methods=["GET"])
+def search_recipes_by_destacado():
+    destacado_param = request.args.get("destacado", "").lower()
+
+    connection = create_mysql_connection()
+    if not connection:
+        return jsonify({"error": "Unable to connect to the database"})
+
+    cursor = connection.cursor(dictionary=True)
+
+    if destacado_param:
+        query = f"SELECT * FROM tblrecipes WHERE destacado >= 5 AND destacado = '{destacado_param}'"
+    else:
+        query = "SELECT * FROM tblrecipes WHERE destacado >= 5"
+
+    print(query)
+
+    cursor.execute(query)
+
+    matching_recipes = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
+    for recipe in matching_recipes:
+        # Add ingredients, comments, and steps to each recipe entry
+        recipe["ingredients"] = get_recipe_ingredients(recipe["id"])
+        recipe["comments"] = get_recipe_comments(recipe["id"])
+        recipe["steps"] = get_recipe_steps(recipe["id"])
+
+    # Return the list of recipes in JSON format
+    return jsonify({"recipes": matching_recipes})
+
+
+# FINAL RUTA DESTACADO
 
 # Start the Flask application
 print("Starting the application...")
