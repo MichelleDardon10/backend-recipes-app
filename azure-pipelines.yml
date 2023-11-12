@@ -8,21 +8,6 @@ jobs:
 - job: BuildAndTest
   displayName: 'Build and Test'
   steps:
-  - task: UseDotNet@2
-    inputs:
-      version: '5.x'  # O la versión de .NET que estás utilizando
-
-  - task: DotNetCoreCLI@2
-    displayName: 'Restore dependencies'
-    inputs:
-      command: 'restore'
-
-  - task: DotNetCoreCLI@2
-    displayName: 'Build Backend'
-    inputs:
-      command: 'build'
-      arguments: '--configuration Release'
-
   - task: Docker@2
     displayName: 'Build Docker images'
     inputs:
@@ -31,7 +16,7 @@ jobs:
       Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
       tags: '$(Build.BuildId)'
 
-      # Agrega más tareas para construir otras imágenes si es necesario
+  # Agrega más tareas para construir otras imágenes si es necesario
 
   # Agrega tareas adicionales según sea necesario, como pruebas unitarias, pruebas de integración, etc.
 
