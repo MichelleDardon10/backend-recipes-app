@@ -1,36 +1,44 @@
-# Python package
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
-
 trigger:
-- master
+- main  # O la rama que desees
 
 pool:
-  vmImage: ubuntu-latest
-strategy:
-  matrix:
-    Python27:
-      python.version: '2.7'
-    Python35:
-      python.version: '3.5'
-    Python36:
-      python.version: '3.6'
-    Python37:
-      python.version: '3.7'
+  vmImage: 'ubuntu-latest'
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+jobs:
+- job: BuildAndTest
+  displayName: 'Build and Test'
+  steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '3.x'  # O la versión de .NET que estás utilizando
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore dependencies'
+    inputs:
+      command: 'restore'
 
-- script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
+  - task: DotNetCoreCLI@2
+    displayName: 'Build Backend'
+    inputs:
+      command: 'build'
+      arguments: '--configuration Release'
+
+  - task: Docker@2
+    displayName: 'Build Backend Docker image'
+    inputs:
+      command: 'build'
+      containerRegistry: 'YourAzureContainerRegistryConnection'  # Reemplaza con la conexión correcta de tu Azure Container Registry
+      repository: 'backend'
+      Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+      tags: '$(Build.BuildId)'
+
+  # Agrega tareas adicionales según sea necesario, como pruebas unitarias, pruebas de integración, etc.
+
+  - task: Docker@2
+    displayName: 'Build Database Docker image'
+    inputs:
+      command: 'build'
+      containerRegistry: 'YourAzureContainerRegistryConnection'  # Reemplaza con la conexión correcta de tu Azure Container Registry
+      repository: 'database'
+      Dockerfile: '$(Build.SourcesDirectory)/mysql_docker/Dockerfile'
+      tags: '$(Build.BuildId)'
