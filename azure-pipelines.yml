@@ -27,7 +27,6 @@ jobs:
     displayName: 'Build Backend Docker image'
     inputs:
       command: 'build'
-      containerRegistry: 'YourAzureContainerRegistryConnection'  # Reemplaza con la conexión correcta de tu Azure Container Registry
       repository: 'backend'
       Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
       tags: '$(Build.BuildId)'
@@ -38,7 +37,6 @@ jobs:
     displayName: 'Build Database Docker image'
     inputs:
       command: 'build'
-      containerRegistry: 'YourAzureContainerRegistryConnection'  # Reemplaza con la conexión correcta de tu Azure Container Registry
       repository: 'database'
       Dockerfile: '$(Build.SourcesDirectory)/mysql_docker/Dockerfile'
       tags: '$(Build.BuildId)'
