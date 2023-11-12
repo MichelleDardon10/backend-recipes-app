@@ -10,7 +10,7 @@ jobs:
   steps:
   - task: UseDotNet@2
     inputs:
-      version: '3.x'  # O la versión de .NET que estás utilizando
+      version: '5.x'  # O la versión de .NET que estás utilizando
 
   - task: DotNetCoreCLI@2
     displayName: 'Restore dependencies'
@@ -24,12 +24,15 @@ jobs:
       arguments: '--configuration Release'
 
   - task: Docker@2
-    displayName: 'Build Backend Docker image'
+    displayName: 'Build Docker images'
     inputs:
       command: 'build'
+      containerRegistry: 'YourAzureContainerRegistryConnection'  # Asegúrate de tener una conexión válida aquí
       repository: 'backend'
       Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
       tags: '$(Build.BuildId)'
+
+      # Agrega más tareas para construir otras imágenes si es necesario
 
   # Agrega tareas adicionales según sea necesario, como pruebas unitarias, pruebas de integración, etc.
 
@@ -37,6 +40,7 @@ jobs:
     displayName: 'Build Database Docker image'
     inputs:
       command: 'build'
+      containerRegistry: 'YourAzureContainerRegistryConnection'  # Asegúrate de tener una conexión válida aquí
       repository: 'database'
       Dockerfile: '$(Build.SourcesDirectory)/mysql_docker/Dockerfile'
       tags: '$(Build.BuildId)'
