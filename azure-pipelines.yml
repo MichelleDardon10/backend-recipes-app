@@ -27,7 +27,6 @@ jobs:
     displayName: 'Build Docker images'
     inputs:
       command: 'build'
-      containerRegistry: 'YourAzureContainerRegistryConnection'  # Asegúrate de tener una conexión válida aquí
       repository: 'backend'
       Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
       tags: '$(Build.BuildId)'
@@ -40,7 +39,6 @@ jobs:
     displayName: 'Build Database Docker image'
     inputs:
       command: 'build'
-      containerRegistry: 'YourAzureContainerRegistryConnection'  # Asegúrate de tener una conexión válida aquí
       repository: 'database'
       Dockerfile: '$(Build.SourcesDirectory)/mysql_docker/Dockerfile'
       tags: '$(Build.BuildId)'
