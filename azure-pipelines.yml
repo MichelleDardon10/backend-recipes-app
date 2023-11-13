@@ -1,5 +1,7 @@
 trigger:
-- main  # O la rama que desees
+  branches:
+    include:
+      - development
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -27,3 +29,7 @@ jobs:
       repository: 'database'
       Dockerfile: '$(Build.SourcesDirectory)/mysql_docker/Dockerfile'
       tags: '$(Build.BuildId)'
+
+  - script: |
+      python -m unittest app_test.py
+    displayName: 'Run Unit Tests'
