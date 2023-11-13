@@ -27,5 +27,6 @@ jobs:
       tags: '$(Build.BuildId)'
 
   - script: |
+      pip install -r requirements.txt
       python -m unittest app_test.py
     displayName: 'Run Unit Tests'
