@@ -4,28 +4,48 @@ trigger:
       - development
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 jobs:
 - job: BuildAndTest
   displayName: 'Build and Test'
   steps:
-  - task: Docker@2
-    displayName: 'Build Docker images'
-    inputs:
-      command: 'build'
-      repository: 'backend'
-      Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-      tags: '$(Build.BuildId)'
+  # Eliminar contenedores antiguos
+  - script: 'docker stop my-mysql-container || true && docker rm my-mysql-container || true'
+    displayName: 'Stop and Remove MySQL Container'
+  - script: 'docker stop backend || true && docker rm backend || true'
+    displayName: 'Stop and Remove Backend Container'
 
-  - task: Docker@2
-    displayName: 'Build Database Docker image'
-    inputs:
-      command: 'build'
-      repository: 'database'
-      Dockerfile: '$(Build.SourcesDirectory)/mysql_docker/Dockerfile'
-      tags: '$(Build.BuildId)'
+  # Tarea para construir la imagen de MySQL
+  - script: 'docker build -t my-mysql-image .'
+    displayName: 'Build MySQL Docker image'
 
+  # Tarea para crear el directorio local para la persistencia de datos MySQL
+  - script: 'if [ ! -d ~/mysql-data ]; then mkdir ~/mysql-data; fi'
+    displayName: 'Create MySQL Data Directory'
+
+  # Tarea para ejecutar el contenedor MySQL
+  - script: 'docker run -d --name my-mysql-container -p 3306:3306 -v ~/mysql-data:/var/lib/mysql-persistent my-mysql-image'
+    displayName: 'Run MySQL Container'
+
+  # Tarea para construir la imagen de Backend
+  - script: 'docker build -t backend .'
+    displayName: 'Build Backend Docker image'
+
+  # Tarea para ejecutar el contenedor Backend
+  - script: 'docker run -d -p5001:5001 --name backend backend'
+    displayName: 'Run Backend Container'
+
+  # Eliminar entorno virtual existente
+  - script: 'if [ -d env ]; then rm -rf env; fi'
+    displayName: 'Remove existing venv'
+
+  # Crear entorno virtual y ejecutar pruebas
   - script: |
-      python -m unittest app_test.py
+      python -m venv env
+      source env/bin/activate
+      pip install -r requirements.txt
+      echo "PYTHONPATH: $PYTHONPATH"
+      python -m pytest --cov=Utils --cov-report=html tests/
     displayName: 'Run Unit Tests'
+
