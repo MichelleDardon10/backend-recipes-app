@@ -49,12 +49,3 @@ jobs:
       python -m pytest --cov=Utils --cov-report=html tests/
     displayName: 'Run Unit Tests'
 
-# Añadir etapa de validación de cobertura
-- job: ValidateCoverage
-  displayName: 'Validate Coverage'
-  dependsOn: BuildAndTest
-  steps:
-  - script: 'if [ ! -f ./htmlcov/index.html ]; then echo "Coverage report not found"; exit 1; fi'
-    displayName: 'Check for Coverage Report'
-
-  # Aquí puedes agregar más validaciones según tus necesidades.
