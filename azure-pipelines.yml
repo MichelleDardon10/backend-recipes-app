@@ -10,21 +10,25 @@ jobs:
 - job: BuildAndTest
   displayName: 'Build and Test'
   steps:
-  - task: Docker@2
-    displayName: 'Build Docker images'
-    inputs:
-      command: 'build'
-      repository: 'backend'
-      Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-      tags: '$(Build.BuildId)'
+  # Tarea para construir la imagen de MySQL
+  - script: 'docker build -t my-mysql-image .'
+    displayName: 'Build MySQL Docker image'
 
-  - task: Docker@2
-    displayName: 'Build Database Docker image'
-    inputs:
-      command: 'build'
-      repository: 'database'
-      Dockerfile: '$(Build.SourcesDirectory)/mysql_docker/Dockerfile'
-      tags: '$(Build.BuildId)'
+  # Tarea para crear el directorio local para la persistencia de datos MySQL
+  - script: 'mkdir ~/mysql-data'
+    displayName: 'Create MySQL Data Directory'
+
+  # Tarea para ejecutar el contenedor MySQL
+  - script: 'docker run -d --name my-mysql-container -p 3306:3306 -v ~/mysql-data:/var/lib/mysql-persistent my-mysql-image'
+    displayName: 'Run MySQL Container'
+
+  # Tarea para construir la imagen de Backend
+  - script: 'docker build -t backend .'
+    displayName: 'Build Backend Docker image'
+
+  # Tarea para ejecutar el contenedor Backend
+  - script: 'docker run -d -p5001:5001 --name backend backend'
+    displayName: 'Run Backend Container'
 
   - script: |
       pip install -r requirements.txt
