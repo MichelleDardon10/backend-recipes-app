@@ -4,28 +4,28 @@ trigger:
       - development
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 jobs:
-- job: BuildAndTest
-  displayName: 'Build and Test'
-  steps:
-  - task: Docker@2
-    displayName: 'Build Docker images'
-    inputs:
-      command: 'build'
-      repository: 'backend'
-      Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-      tags: '$(Build.BuildId)'
+  - job: BuildAndTest
+    displayName: "Build and Test"
+    steps:
+      - task: Docker@2
+        displayName: "Build Docker images"
+        inputs:
+          command: "build"
+          repository: "backend"
+          Dockerfile: "$(Build.SourcesDirectory)/Dockerfile"
+          tags: "$(Build.BuildId)"
 
-  - task: Docker@2
-    displayName: 'Build Database Docker image'
-    inputs:
-      command: 'build'
-      repository: 'database'
-      Dockerfile: '$(Build.SourcesDirectory)/mysql_docker/Dockerfile'
-      tags: '$(Build.BuildId)'
+      - task: Docker@2
+        displayName: "Build Database Docker image"
+        inputs:
+          command: "build"
+          repository: "database"
+          Dockerfile: "$(Build.SourcesDirectory)/mysql_docker/Dockerfile"
+          tags: "$(Build.BuildId)"
 
-  - script: |
-      python -m unittest app_test.py
-    displayName: 'Run Unit Tests'
+      - script: |
+          python -m unittest app_test.py
+        displayName: "Run Unit Tests"
