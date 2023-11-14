@@ -4,18 +4,24 @@ trigger:
       - development
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 jobs:
 - job: BuildAndTest
   displayName: 'Build and Test'
   steps:
+  # Eliminar contenedores antiguos
+  - script: 'docker stop my-mysql-container || true && docker rm my-mysql-container || true'
+    displayName: 'Stop and Remove MySQL Container'
+  - script: 'docker stop backend || true && docker rm backend || true'
+    displayName: 'Stop and Remove Backend Container'
+
   # Tarea para construir la imagen de MySQL
   - script: 'docker build -t my-mysql-image .'
     displayName: 'Build MySQL Docker image'
 
   # Tarea para crear el directorio local para la persistencia de datos MySQL
-  - script: 'mkdir ~/mysql-data'
+  - script: 'if not exist ~/mysql-data mkdir ~/mysql-data'
     displayName: 'Create MySQL Data Directory'
 
   # Tarea para ejecutar el contenedor MySQL
@@ -30,7 +36,22 @@ jobs:
   - script: 'docker run -d -p5001:5001 --name backend backend'
     displayName: 'Run Backend Container'
 
+  # Eliminar entorno virtual existente
+  - script: 'if exist env rmdir /s /q env'
+    displayName: 'Remove existing venv'
+
+  # Crear entorno virtual y ejecutar pruebas
   - script: |
+      python -m venv env
+      .\env\Scripts\activate
       pip install -r requirements.txt
-      python -m unittest app_test.py
+      pytest --cov=Utils --cov-report=html tests/
     displayName: 'Run Unit Tests'
+
+# Añadir etapa de validación de cobertura
+- job: ValidateCoverage
+  displayName: 'Validate Coverage'
+  dependsOn: BuildAndTest
+  steps:
+  - script: 'if ((Get-Content .\coverage\index.html | Select-String -Pattern "<span class=\`"pc_cov_percent\`">100%<\/span>").Count -eq 0) { exit 1 }'
+    displayName: 'Check for 100% Coverage'

@@ -1,6 +1,6 @@
 # Import necessary modules from Flask framework
 import sys
-
+from Utils import read_json_file
 from flask import Flask, jsonify, request
 import mysql.connector
 
@@ -152,13 +152,6 @@ def get_recipe_steps(recipe_id):
     cursor.close()
     connection.close()
     return steps
-
-
-# Function to read and parse the JSON data from a file
-def read_json_file(file_path):
-    with open(file_path, "r") as json_file:
-        data = json.load(json_file)
-    return data
 
 
 # Run the setup code before starting the Flask app
