@@ -54,7 +54,7 @@ jobs:
   displayName: 'Validate Coverage'
   dependsOn: BuildAndTest
   steps:
-  - script: 'if [ ! -f ./coverage/index.html ]; then echo "Coverage report not found"; exit 1; fi'
+  - script: 'if [ ! -f ./htmlcov/index.html ]; then echo "Coverage report not found"; exit 1; fi'
     displayName: 'Check for Coverage Report'
 
   # Aquí puedes agregar más validaciones según tus necesidades.
